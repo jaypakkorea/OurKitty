@@ -1,0 +1,42 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /api
+
+spring:
+  profiles:
+    active:
+      - prod
+      - key
+
+
+  jpa:
+    database: mysql
+    hibernate:
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+cloud:
+  aws:
+    s3:
+      bucket: cat-ssafy
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

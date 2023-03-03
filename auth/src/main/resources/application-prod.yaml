@@ -1,0 +1,30 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /auth
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db-mysql:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: mydbMaster
+    password: master135
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            redirect-uri: https://ourkitty.site/auth/login/oauth2/code/kakao
+          naver:
+            redirect-uri: https://ourkitty.site/auth/login/oauth2/code/naver
+          google:
+            redirect-uri: https://ourkitty.site/auth/login/oauth2/code/google
+
+auth:
+  redirect-url: https://ourkitty.site/user/auth/token
+
+logging:
+  level:
+    root: debug
+    org.hibernate.SQL: debug

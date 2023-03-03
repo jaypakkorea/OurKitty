@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    stages {
+        stage('Prepare') {
+            agent any
+            steps {
+                checkout scm
+            }
+
+            post {
+                success {
+                    echo 'prepare success'
+                }
+
+                always {
+                    echo 'done prepare'
+                }
+
+                cleanup {
+                    echo 'after all other post conditions'
+                }
+            }
+        }
+
+        stage('build gradle') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh  './gradlew build'
+                sh 'ls -al ./build'
+            }
+
+            post {
+                success {
+                    echo 'gradle build success'
+                }
+
+                failure {
+                    echo 'gradle build failed'
+                }
+            }
+        }
+
+        stage('dockerizing'){
+            steps{
+                sh 'docker build . -t scofe/docker-jenkins-github-test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker rm -f $(docker ps -a -q -f name=docker-jenkins-github-test)'
+                sh 'docker rmi -f scofe/docker-jenkins-github-test'
+                sh 'docker run --name docker-jenkins-github-test -d -p 8088:8088 scofe/docker-jenkins-github-test'
+            }
+
+            post {
+                success {
+                    echo 'success'
+                }
+
+                failure {
+                    echo 'failed'
+                }
+            }
+        }
+    }
+}

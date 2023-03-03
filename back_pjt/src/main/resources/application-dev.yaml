@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+auth:
+  base-url: http://localhost:8090/auth
+
+
+logging:
+  level:
+    root: info
+    org:
+      hibernate:
+        SQL: info
+        type:
+          descriptor:
+            sql:
+              BasicBinder: info

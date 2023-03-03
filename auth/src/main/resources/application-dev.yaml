@@ -1,0 +1,34 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /auth
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mydb?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
+    username: root
+    password: ssafy
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            redirect-uri: http://localhost:8090/auth/login/oauth2/code/kakao
+          naver:
+            redirect-uri: http://localhost:8090/auth/login/oauth2/code/naver
+          google:
+            redirect-uri: http://localhost:8090/auth/login/oauth2/code/google
+
+auth:
+  redirect-url: http://localhost:3000/auth/user/token
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
